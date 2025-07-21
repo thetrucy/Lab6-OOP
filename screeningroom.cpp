@@ -1,6 +1,5 @@
 #include "cinema.h"
 
-
 ScreeningRoom::ScreeningRoom() {
     room_name = new string("");
     numseats = new int(0);
@@ -11,6 +10,7 @@ ScreeningRoom::ScreeningRoom(const string& name, int numseats) {
     room_name = new string(name);
     this->numseats = new int(numseats);
     seatrows = new vector<SeatRow*>;
+    
 }
 ScreeningRoom::ScreeningRoom(const string& name, int numrow, int seatsPerRow) {
     room_name = new string(name);
@@ -27,22 +27,24 @@ ScreeningRoom::ScreeningRoom(const ScreeningRoom& other) {
     room_name = new string(*other.room_name);
     numseats = new int(*other.numseats);
     numrow = new int(*other.numrow);
+    seatrows = new vector<SeatRow*>;
     for(int i = 0; i < *numrow; i++){
         SeatRow* row = other.getSeatRow(i+'A');
-        cout<<row->getRowLabel()<<endl;
-        this->seatrows->push_back(new SeatRow(*row));
+        this->seatrows->push_back(new SeatRow(*row));  // the problem
+
     }
 }
 ScreeningRoom& ScreeningRoom::operator=(const ScreeningRoom& other) {
     if (this != & other) {
         *room_name = *other.room_name;
         *numseats = *other.numseats;
+        *numrow = *other.numrow;
         for(auto seatrow: *seatrows) {
             delete seatrow;
         }
         seatrows->clear();
         for(auto seatrow: *other.seatrows) {
-            seatrows->push_back(seatrow);
+            this->seatrows->push_back(new SeatRow(*seatrow));
         }
     }
     return *this;

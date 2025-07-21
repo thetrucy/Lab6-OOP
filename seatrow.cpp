@@ -24,11 +24,15 @@ SeatRow::SeatRow(const SeatRow& other) {
 }
 SeatRow& SeatRow::operator=(const SeatRow& other) {
     if(this != &other) {
-        *rowlabel = *other.rowlabel;
+        delete rowlabel;
+        delete seatsPerRow;
         for (auto seat : *seats) {
             delete seat;
         }
         seats->clear();
+
+        rowlabel = new char(*other.rowlabel);
+        seatsPerRow = new int(*other.seatsPerRow);
         for (auto seat : *other.seats) {
             seats->push_back(new Seat(*seat));
         }
@@ -49,6 +53,8 @@ istream& operator>>(istream& in, SeatRow& row) {
     int seatsPerRow;
     cout << "Enter number of seats for row " << *row.rowlabel << ": ";
     in >> seatsPerRow;
+    *row.seatsPerRow = seatsPerRow;
+    
     for (auto seat : *row.seats) delete seat;
     row.seats->clear();
     for (int i = 0; i < seatsPerRow; ++i) {
@@ -56,6 +62,7 @@ istream& operator>>(istream& in, SeatRow& row) {
         in >> *seat;
         row.seats->push_back(seat);
     }
+    
     return in;
 }
 

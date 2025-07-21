@@ -9,16 +9,15 @@ ScreeningSchedule::ScreeningSchedule() {
 }
 
 ScreeningSchedule::ScreeningSchedule(Movie* m, ScreeningRoom* r, const Date& start, double basePrice) {
-    movie = m;
-    //cout<<r->getSeatRow('B');
+    movie = new Movie(*m);
+
     screening_room = new ScreeningRoom(*r);
-    cout<<"running"<<endl;
+
     start_time = new Date(start);
     end_time = new Date(start);
     end_time->addMinutes(movie->getDuration());
 
     base_price = new double(basePrice);
-    cout<<"schedule created\n";
 }
 
 ScreeningSchedule::ScreeningSchedule(const ScreeningSchedule& other) {
@@ -47,10 +46,6 @@ ScreeningSchedule::~ScreeningSchedule() {
     delete end_time;
     delete base_price;
 }
-/*
-void ScreeningSchedule::input(istream& in) {
-    // Implement as needed
-}*/
 
 istream& operator>>(istream& in, ScreeningSchedule& schedule) {
     // Implement as needed

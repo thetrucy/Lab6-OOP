@@ -13,12 +13,12 @@ Seat::Seat(int seatnum, char rowlabel,const string& status, const string& type) 
     this->type = new string (type);
 }
 Seat::Seat(const Seat& other) {
-    cout<<"runnig";
+
     seatnum = new int (*other.seatnum);
     rowlabel = new char(*other.rowlabel);
     status = new string(*other.status);
     type = new string(*other.type);
-    cout<<*this->seatnum;
+
 }
 Seat& Seat::operator=(const Seat& other) {
     if(this != &other) {
